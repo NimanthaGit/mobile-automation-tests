@@ -1,6 +1,6 @@
 from appium import webdriver
 from appium.webdriver.common.appiumby import AppiumBy
-from appium.options import AppiumOptions
+from appium.options.android import UiAutomator2Options
 import pytest
 import os
 
@@ -99,8 +99,8 @@ class TestLogin:
         lt_access_key = os.environ.get("LT_ACCESS_KEY", "")
 
         # NEW: Use AppiumOptions - required for Appium v3
-        options = AppiumOptions()
-        options.platform_name = "Android"
+        options = UiAutomator2Options()
+       
 
         # LambdaTest capabilities
         options.set_capability("deviceName", "Samsung Galaxy S23")
