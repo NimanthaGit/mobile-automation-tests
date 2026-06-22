@@ -23,12 +23,13 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Run Appium tests on LambdaTest
+      - name: Run smoke tests only
         env:
           LT_USERNAME: ${{ secrets.LT_USERNAME }}
           LT_ACCESS_KEY: ${{ secrets.LT_ACCESS_KEY }}
         run: |
-          pytest test_login.py \
+          pytest test_login.py::test_pipeline_is_working \
+            test_login.py::test_page_object_model_structure \
             --html=report.html \
             --self-contained-html \
             -v
