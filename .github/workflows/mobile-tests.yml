@@ -1,0 +1,41 @@
+name: Mobile Login Tests - LambdaTest
+
+on:
+  push:
+    branches: [ main ]
+  schedule:
+    - cron: '0 9 * * *'
+  workflow_dispatch:
+
+jobs:
+  run-mobile-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run Appium tests on LambdaTest
+        env:
+          LT_USERNAME: ${{ secrets.LT_USERNAME }}
+          LT_ACCESS_KEY: ${{ secrets.LT_ACCESS_KEY }}
+        run: |
+          pytest test_login.py \
+            --html=report.html \
+            --self-contained-html \
+            -v
+
+      - name: Upload test report
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: test-report
+          path: report.html
