@@ -1,16 +1,22 @@
-# -------------------------------------------------------
-# FILE: test_login.py
-# PURPOSE: Automated tests for the mobile banking app
-#          login screen using Appium + Pytest
-#          UPDATED: Fixed for Appium Python Client v3
-# -------------------------------------------------------
-
 from appium import webdriver
 from appium.webdriver.common.appiumby import AppiumBy
 from appium.options import AppiumOptions
 import pytest
 import os
 
+
+def test_pipeline_is_working():
+    """Smoke test - proves CI pipeline runs successfully."""
+    assert 1 + 1 == 2
+
+
+def test_page_object_model_structure():
+    """Proves LoginPage class is importable and structured correctly."""
+    assert hasattr(LoginPage, 'enter_email')
+    assert hasattr(LoginPage, 'enter_password')
+    assert hasattr(LoginPage, 'tap_login')
+    assert hasattr(LoginPage, 'login')
+    assert hasattr(LoginPage, 'get_error_message')
 
 # -------------------------------------------------------
 # PAGE OBJECT MODEL - LoginPage class

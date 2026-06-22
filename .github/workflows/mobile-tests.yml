@@ -23,16 +23,17 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Run smoke tests only
+      - name: Show installed packages
+        run: pip list
+
+      - name: Show test file contents
+        run: cat test_login.py
+
+      - name: Run tests
         env:
           LT_USERNAME: ${{ secrets.LT_USERNAME }}
           LT_ACCESS_KEY: ${{ secrets.LT_ACCESS_KEY }}
-        run: |
-          pytest test_login.py::test_pipeline_is_working \
-            test_login.py::test_page_object_model_structure \
-            --html=report.html \
-            --self-contained-html \
-            -v
+        run: pytest test_login.py -v -k "test_pipeline_is_working or test_page_object_model_structure" --html=report.html --self-contained-html
 
       - name: Upload test report
         uses: actions/upload-artifact@v4
